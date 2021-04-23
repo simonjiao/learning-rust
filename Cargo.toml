@@ -14,3 +14,9 @@ threadpool = "1.8"
 num_cpus = "1.13"
 walkdir = "2.3"
 ring = "0.16"
+num = "0.4"
+image = "0.23"
+error-chain = "0.12"
+reqwest = { version = "0.11", default-features = false, features = ["rustls-tls", "blocking"] }
+csv = "1.1"
+serde = { version = "1", features = ["derive"] }
