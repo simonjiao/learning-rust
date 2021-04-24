@@ -532,6 +532,7 @@ dependencies = [
  "lazy_static",
  "num",
  "num_cpus",
+ "rayon",
  "reqwest",
  "ring",
  "serde",

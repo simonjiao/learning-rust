@@ -11,3 +11,5 @@ pub use send_data_between_threads::send_data_between_threads;
 mod draw_fractal_threadpool;
 pub use draw_fractal_threadpool::draw_fractal;
 mod julia;
+mod par_array;
+pub use par_array::*;
