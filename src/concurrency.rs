@@ -13,3 +13,7 @@ pub use draw_fractal_threadpool::draw_fractal;
 mod julia;
 mod par_array;
 pub use par_array::*;
+mod map_reduce;
+pub use map_reduce::map_reduce;
+mod thumbnails;
+pub use thumbnails::jpg_thumbnails;

@@ -6,12 +6,20 @@
 //use learning_rust::parallel_pipeline;
 //use learning_rust::send_data_between_threads;
 //use learning_rust::par_test_array;
-use learning_rust::par_search_array;
+//use learning_rust::par_search_array;
+//use learning_rust::par_sort_array;
+//use learning_rust::map_reduce;
+use learning_rust::jpg_thumbnails;
 
 fn main() {
     //mutate_array();
     //par_test_array();
-    par_search_array();
+    //par_search_array();
+    //par_sort_array();
+    //map_reduce();
+    if let Err(e) = jpg_thumbnails() {
+        println!("Failed to save thumbnails {}", e);
+    }
 
     //let arr = &[1, 22, -4, 10];
     //let max = find_max(arr);
