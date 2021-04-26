@@ -2,6 +2,8 @@ use learning_rust::avoid_discarding;
 use learning_rust::error_backtrace;
 use learning_rust::read_uptime;
 
+pub mod memory_management
+
 fn main() {
     match read_uptime() {
         Ok(time) => println!("uptime {}", time),
