@@ -10,6 +10,7 @@ pub use error_handling::*;
 
 mod filesystem;
 mod develop_tools;
+mod compression;
+pub use compression::*;
 pub use develop_tools::*;
-
 pub use filesystem::*;
