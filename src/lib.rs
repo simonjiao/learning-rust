@@ -11,6 +11,9 @@ pub use error_handling::*;
 mod filesystem;
 mod develop_tools;
 mod compression;
+mod cryptography;
+
 pub use compression::*;
 pub use develop_tools::*;
 pub use filesystem::*;
+pub use cryptography::*;
