@@ -16,7 +16,6 @@ error_chain! {
         UnspecifiedError(t:String)
     }
 }
-
 fn sha256_digest<R: Read>(mut reader: R) -> Result<Digest> {
     let mut context = Context::new(&SHA256);
     let mut buffer = [0; 1024];
