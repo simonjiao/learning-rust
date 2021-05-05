@@ -13,9 +13,11 @@ mod develop_tools;
 mod compression;
 mod cryptography;
 mod data_structure;
+mod database;
 
 pub use compression::*;
 pub use develop_tools::*;
 pub use filesystem::*;
 pub use cryptography::*;
 pub use data_structure::*;
+pub use database::*;

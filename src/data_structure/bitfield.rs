@@ -9,6 +9,7 @@ bitflags! {
         const FLAG_ABC  = Self::FLAG_A.bits
                         | Self::FLAG_B.bits
                         |Self::FLAG_C.bits;
+        const FLAG_D    = 0b00001000;
     }
 }
 
@@ -33,8 +34,8 @@ pub fn bit_op() {
     assert_eq!((e1-e2), Myflags::FLAG_A);
     assert_eq!((e2-e1), Myflags::FLAG_B);
     assert_eq!((e1-Myflags::FLAG_ABC), Myflags::from_bits(0).unwrap());
-    assert_eq!(!e2, Myflags::FLAG_A);
-    assert_eq!(!e1, Myflags::FLAG_B);
+    assert_eq!(!e2, Myflags::FLAG_A|Myflags::FLAG_D);
+    assert_eq!(!e1, Myflags::FLAG_B|Myflags::FLAG_D);
 
     let mut flags = Myflags::FLAG_ABC;
     assert_eq!(format!("{}", flags), "00000000000000000000000000000111");

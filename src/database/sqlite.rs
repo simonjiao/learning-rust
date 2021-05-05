@@ -1,0 +1,79 @@
+use rusqlite::{Result, Connection};
+use std::collections::HashMap;
+
+pub fn sqlite_db_ops()->Result<()> {
+    create_sqlite_db()?;
+    insert_and_select()?;
+    Ok(())
+}
+
+#[derive(Debug)]
+struct Cat {
+    name:String,
+    color:String,
+}
+
+fn insert_and_select()->Result<()> {
+    let conn = Connection::open("cats.db")?;
+
+    let mut cat_colors = HashMap::new();
+    cat_colors.insert(String::from("Blue"), vec!["Tigger", "Sammy"]);
+    cat_colors.insert(String::from("Black"), vec!["Oreo", "Biscuit"]);
+
+    for (color, names) in &cat_colors {
+        conn.execute("INSERT INTO cat_colors (name) values (?1)",
+                     &[&color.to_string()],
+        )?;
+        let last_id = conn.last_insert_rowid().to_string();
+
+        for cat_name in names {
+            conn.execute("INSERT INTO cats (name, color_id) values (?1, ?2)",
+            &[&cat_name.to_string(), &last_id],
+            )?;
+        }
+    }
+    let mut stmt = conn.prepare(
+        "SELECT c.name, cc.name from cats c \
+        INNER JOIN cat_colors cc \
+        ON cc.id == c.color_id;",
+    )?;
+
+    let cats = stmt.query_map([], |row| {
+        Ok(Cat {
+            name: row.get(0)?,
+            color: row.get(1)?,
+        })
+    })?;
+
+    for cat in cats {
+        println!("Found cat {:?}", cat);
+    }
+
+    Ok(())
+}
+
+fn create_sqlite_db()->Result<()> {
+    let _ = std::fs::remove_file("cats.db");
+    let conn = Connection::open("cats.db")?;
+
+    conn.execute(
+        "create table if not exists cat_colors (\
+        id integer primary key,\
+        name text not null unique\
+        )",
+        [],
+        //NO_PARAMS, deprecated
+    )?;
+
+    conn.execute(
+        "create table if not exists cats (\
+        id integer primary key,\
+        name text not null,\
+        color_id integer not null references cat_colors(id)\
+        )",
+        [],
+        //NO_PARAMS, deprecated
+    )?;
+
+    Ok(())
+}
