@@ -3,8 +3,41 @@ use std::collections::HashMap;
 
 pub fn sqlite_db_ops()->Result<()> {
     create_sqlite_db()?;
+    transaction()?;
     insert_and_select()?;
     Ok(())
+}
+
+fn transaction() -> Result<()> {
+    let mut conn = Connection::open("cats.db")?;
+
+    successful_tx(&mut conn)?;
+
+    let res = rollback_tx(&mut conn);
+    assert!(res.is_err());
+
+    Ok(())
+}
+
+fn successful_tx(conn: &mut Connection) -> Result<()> {
+    let tx = conn.transaction()?;
+
+    tx.execute("delete from cat_colors", [])?;
+    tx.execute("insert into cat_colors (name) values (?1)", &[&"lavender"])?;
+    tx.execute("insert into cat_colors (name) values (?1)", &[&"blue"])?;
+
+    tx.commit()
+}
+
+fn rollback_tx(conn: &mut Connection) -> Result<()> {
+    let tx = conn.transaction()?;
+
+    tx.execute("delete from cat_colors", [])?;
+    tx.execute("insert into cat_colors (name) values (?1)", &[&"lavender"])?;
+    tx.execute("insert into cat_colors (name) values (?1)", &[&"blue"])?;
+    tx.execute("insert into cat_colors (name) values (?1)", &[&"lavender"])?;
+
+    tx.commit()
 }
 
 #[derive(Debug)]
