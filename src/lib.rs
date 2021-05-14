@@ -15,6 +15,8 @@ mod cryptography;
 mod data_structure;
 mod database;
 mod encoding;
+mod operating_system;
+mod macros;
 
 pub use compression::*;
 pub use develop_tools::*;
@@ -23,3 +25,5 @@ pub use cryptography::*;
 pub use data_structure::*;
 pub use database::*;
 pub use encoding::*;
+pub use operating_system::*;
+pub use macros::*;
