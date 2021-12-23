@@ -31,6 +31,7 @@ pub fn wavelength_to_rgb(wavelength: u32) -> Rgb<u8> {
 }
 
 // Maps Julia set distance estimation to intensity values
+#[allow(clippy::many_single_char_names)]
 pub fn julia(c: Complex<f32>, x: u32, y: u32, width: u32, height: u32, max_iter: u32) -> u32 {
     let width = width as f32;
     let height = height as f32;

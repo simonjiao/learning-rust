@@ -7,10 +7,7 @@ use threadpool::ThreadPool;
 use walkdir::WalkDir;
 
 fn is_type(entry: &Path, ext: &str) -> bool {
-    match entry.extension() {
-        Some(e) if e.to_string_lossy().to_lowercase() == ext => true,
-        _ => false,
-    }
+    matches!(entry.extension(), Some(e) if e.to_string_lossy().to_lowercase() == ext)
 }
 
 //fn compute_digest(path: &str) -> String {

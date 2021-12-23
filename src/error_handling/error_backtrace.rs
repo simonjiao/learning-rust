@@ -19,7 +19,7 @@ impl Rgb {
     fn from_reader(csv_data: &[u8]) -> Result<Rgb> {
         let color = csv::Reader::from_reader(csv_data)
             .deserialize()
-            .nth(0)
+            .next()
             .ok_or("Cannot deserialize the first CSV record")?
             .chain_err(|| "Cannot deserialize RGB color")?;
 

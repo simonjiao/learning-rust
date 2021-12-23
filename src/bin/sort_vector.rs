@@ -1,3 +1,4 @@
+#[allow(clippy::stable_sort_primitive)]
 fn sort_integer_vector() {
     let mut v = vec![1, 5, 10, 2, 15];
 

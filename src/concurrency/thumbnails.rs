@@ -25,7 +25,7 @@ pub fn jpg_thumbnails() -> Result<()> {
         .filter_map(|x| x.ok())
         .collect();
 
-    if files.len() == 0 {
+    if files.is_empty() {
         error_chain::bail!("No jpg files found!");
     }
 
