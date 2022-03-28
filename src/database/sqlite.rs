@@ -1,7 +1,7 @@
-use rusqlite::{Result, Connection};
+use rusqlite::{Connection, Result};
 use std::collections::HashMap;
 
-pub fn sqlite_db_ops()->Result<()> {
+pub fn sqlite_db_ops() -> Result<()> {
     create_sqlite_db()?;
     transaction()?;
     insert_and_select()?;
@@ -40,13 +40,14 @@ fn rollback_tx(conn: &mut Connection) -> Result<()> {
     tx.commit()
 }
 
+#[allow(unused)]
 #[derive(Debug)]
 struct Cat {
-    name:String,
-    color:String,
+    name: String,
+    color: String,
 }
 
-fn insert_and_select()->Result<()> {
+fn insert_and_select() -> Result<()> {
     let conn = Connection::open("cats.db")?;
 
     let mut cat_colors = HashMap::new();
@@ -54,14 +55,16 @@ fn insert_and_select()->Result<()> {
     cat_colors.insert(String::from("Black"), vec!["Oreo", "Biscuit"]);
 
     for (color, names) in &cat_colors {
-        conn.execute("INSERT INTO cat_colors (name) values (?1)",
-                     &[&color.to_string()],
+        conn.execute(
+            "INSERT INTO cat_colors (name) values (?1)",
+            &[&color.to_string()],
         )?;
         let last_id = conn.last_insert_rowid().to_string();
 
         for cat_name in names {
-            conn.execute("INSERT INTO cats (name, color_id) values (?1, ?2)",
-            &[&cat_name.to_string(), &last_id],
+            conn.execute(
+                "INSERT INTO cats (name, color_id) values (?1, ?2)",
+                &[&cat_name.to_string(), &last_id],
             )?;
         }
     }
@@ -85,7 +88,7 @@ fn insert_and_select()->Result<()> {
     Ok(())
 }
 
-fn create_sqlite_db()->Result<()> {
+fn create_sqlite_db() -> Result<()> {
     let _ = std::fs::remove_file("cats.db");
     let conn = Connection::open("cats.db")?;
 

@@ -12,6 +12,7 @@ pub fn run() {
 
 use serde::{de, Deserialize, Deserializer};
 #[derive(Debug, Deserialize)]
+#[allow(unused)]
 struct Record {
     year: u16,
     make: String,
@@ -27,8 +28,10 @@ fn simple_read() -> Result<()> {
     let mut reader = csv::Reader::from_reader(csv.as_bytes());
     for record in reader.records() {
         let record = record?;
-        println!("In {}, {} built the {} model. It is a {}.",
-            &record[0], &record[1], &record[2], &record[3]);
+        println!(
+            "In {}, {} built the {} model. It is a {}.",
+            &record[0], &record[1], &record[2], &record[3]
+        );
     }
     Ok(())
 }
@@ -40,9 +43,11 @@ fn simple_read_deserialize() -> Result<()> {
 
     let mut reader = csv::Reader::from_reader(csv.as_bytes());
     for record in reader.deserialize() {
-        let record:Record = record?;
-        println!("In {}, {} built the {} model. It is a {}.",
-                 record.year, record.make, record.model, record.description);
+        let record: Record = record?;
+        println!(
+            "In {}, {} built the {} model. It is a {}.",
+            record.year, record.make, record.model, record.description
+        );
     }
     Ok(())
 }
@@ -50,6 +55,7 @@ fn simple_read_deserialize() -> Result<()> {
 use csv::ReaderBuilder;
 
 #[derive(Debug, Deserialize)]
+#[allow(unused)]
 struct NewRecord {
     name: String,
     place: String,
@@ -64,7 +70,9 @@ fn read_csv_delimeter() -> Result<()> {
         alisha\tcolomb\txyz
         Ashley\tZurich\t92";
 
-    let mut reader = ReaderBuilder::new().delimiter(b'\t').from_reader(data.as_bytes());
+    let mut reader = ReaderBuilder::new()
+        .delimiter(b'\t')
+        .from_reader(data.as_bytes());
     for result in reader.deserialize::<NewRecord>() {
         println!("{:?}", result?);
     }
@@ -121,9 +129,21 @@ struct RecordTwo<'a> {
 fn serialize_with_serde() -> Result<()> {
     let mut wtr = csv::Writer::from_writer(io::stdout());
 
-    let rec1 = RecordTwo {name: "Makr", place:"USA", id:12};
-    let rec2 = RecordTwo {name: "Simon", place:"BeiJing", id:143};
-    let rec3 = RecordTwo {name: "cc",place:"UK", id:23};
+    let rec1 = RecordTwo {
+        name: "Makr",
+        place: "USA",
+        id: 12,
+    };
+    let rec2 = RecordTwo {
+        name: "Simon",
+        place: "BeiJing",
+        id: 143,
+    };
+    let rec3 = RecordTwo {
+        name: "cc",
+        place: "UK",
+        id: 23,
+    };
 
     wtr.serialize(&rec1)?;
     wtr.serialize(&rec2)?;
@@ -156,16 +176,16 @@ impl FromStr for HexColor {
             Err("Invalid length of hex string".into())
         } else {
             Ok(HexColor {
-               red:u8::from_str_radix(&trimmed[..2], 16)?,
-               green:u8::from_str_radix(&trimmed[2..4], 16)?,
-               blue:u8::from_str_radix(&trimmed[4..6], 16)?,
+                red: u8::from_str_radix(&trimmed[..2], 16)?,
+                green: u8::from_str_radix(&trimmed[2..4], 16)?,
+                blue: u8::from_str_radix(&trimmed[4..6], 16)?,
             })
         }
     }
 }
 
 impl<'de> Deserialize<'de> for HexColor {
-    fn deserialize<D>(deserializer:D) -> std::result::Result<Self, D::Error>
+    fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
@@ -180,7 +200,8 @@ red,#ff0000
 green,#00ff00
 blue,#0000FF
 periwinkle,#ccccff
-magenta,#ff00ff".to_owned();
+magenta,#ff00ff"
+        .to_owned();
 
     let mut wtr = csv::Writer::from_writer(vec![]);
     let mut rdr = csv::Reader::from_reader(data.as_bytes());
