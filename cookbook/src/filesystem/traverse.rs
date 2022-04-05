@@ -102,7 +102,7 @@ fn is_not_hidden(entry: &DirEntry) -> bool {
 pub fn skip_dotfiles() {
     WalkDir::new(".")
         .into_iter()
-        .filter_entry(|e| is_not_hidden(e))
+        .filter_entry(is_not_hidden)
         .filter_map(|v| v.ok())
         .for_each(|x| println!("{}", x.path().display()));
 }

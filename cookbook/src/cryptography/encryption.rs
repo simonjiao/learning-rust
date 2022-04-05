@@ -49,7 +49,7 @@ pub fn salt_hash_passwd() -> Result<()> {
     );
 
     assert!(should_succeed.is_ok());
-    assert!(!should_failed.is_ok());
+    assert!(should_failed.is_err());
 
     Ok(())
 }
