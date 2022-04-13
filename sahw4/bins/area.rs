@@ -44,7 +44,6 @@ fn main() {
         }
         _ => {
             println!("Invalid shape {}", args[1]);
-            return;
         }
     };
 }
