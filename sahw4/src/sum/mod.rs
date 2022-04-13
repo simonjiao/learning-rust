@@ -33,5 +33,8 @@ mod tests {
     fn overflow_case() {
         let numbers = [1, u32::MAX, 3].as_slice();
         assert_eq!(sum(numbers), None);
+
+        let numbers = [u32::MAX, 1, 3].as_slice();
+        assert_eq!(sum(numbers), None);
     }
 }

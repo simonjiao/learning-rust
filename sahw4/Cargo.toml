@@ -17,5 +17,4 @@ path = "bins/sum.rs"
 name = "area"
 path = "bins/area.rs"
 
-
 [dependencies]
