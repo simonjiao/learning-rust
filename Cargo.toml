@@ -1,7 +1,8 @@
 [workspace]
 members= [
-"cookbook",
-"sahw2"
+    "cookbook",
+    "sahw2",
+    "sahw4",
 ]
 
 [profile.release]
