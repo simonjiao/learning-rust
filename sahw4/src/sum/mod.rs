@@ -1,4 +1,5 @@
-pub fn sum(numbers: &[u32]) -> Option<u32> {
+#[allow(dead_code)]
+pub fn sum1(numbers: &[u32]) -> Option<u32> {
     if numbers.is_empty() {
         return None;
     }
@@ -12,6 +13,27 @@ pub fn sum(numbers: &[u32]) -> Option<u32> {
     }
 
     Some(sum)
+}
+
+#[allow(dead_code)]
+pub fn sum2(numbers: &[u32]) -> Option<u32> {
+    let mut sum = 0u32;
+    for &n in numbers {
+        match sum.checked_add(n) {
+            Some(s) => sum = s,
+            None => {
+                return None;
+            }
+        }
+    }
+    Some(sum)
+}
+
+pub fn sum(numbers: &[u32]) -> Option<u32> {
+    if numbers.is_empty() {
+        return None;
+    }
+    numbers.iter().try_fold(0u32, |acc, &x| acc.checked_add(x))
 }
 
 #[cfg(test)]
